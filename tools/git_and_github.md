@@ -90,6 +90,12 @@ git push -u origin master		# 将本地仓库推送到远程仓库
 git push origin master			# 将本地 master分支的最新修改推送至 github
 ```
 
+#### 更新本地仓库
+
+```shell
+git pull origin master			# 直接将远程仓库代码
+```
+
 #### 解除绑定远程库
 
 ```shell
