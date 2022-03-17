@@ -93,9 +93,16 @@ git push origin master			# 将本地 master分支的最新修改推送至 github
 #### 更新本地仓库
 
 ```shell
+# 该操作会覆盖本地未提交代码，请在保证本地无重要修改时再使用
 git pull origin master			# 直接将远程仓库代码
-```
 
+# 保险的更新方式
+git fetch origin master:temp		# 从远程仓库读取代码并创建一个名为temp的分支
+git diff temp				# 比较temp分支和master分支的差异
+git merge temp				# 如果上述操作觉得没问题，即可合并temp分支
+git branch -d temp			# 删除temp分支
+```
+>关于分支管理的原理与操作可以参考[廖雪峰的博客](https://www.liaoxuefeng.com/wiki/896043488029600/896954848507552)。
 #### 解除绑定远程库
 
 ```shell
