@@ -42,7 +42,7 @@
 
 ### 图片
 
-![天降甘雨](../pic/ganyu.jpeg "甘雨yyds")
+![天降甘雨](pictures/ganyu.jpeg "甘雨yyds")
 
 ```markdown
 ![图片下方说明](图片地址 "图片title")
@@ -97,7 +97,7 @@ title可不加
 行内插入代码块`code`
 
 ```markdown
-​```c++
+```c++
 ```
 
 创建代码块

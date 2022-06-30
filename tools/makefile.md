@@ -6,7 +6,13 @@ github：[https://github.com/seisman/how-to-write-makefile](https://github.com/s
 
 ---
 
-> ps：make命令会在当前目录下顺序查找"GNUmakefile", "makefile", "Makefile"文件，一般我们都会采用"Makefile"，方便后续有需要时增加更高优先级的"makefile"
+> ps：make命令会在当前目录下顺序查找"GNUmakefile", "makefile", "Makefile"文件，一般我们都会采用"Makefile"，方便后续有需要时增加更高优先级的"makefile"。
+>
+> * 若需指定文件：
+>
+>   ```shell
+>   make -f build.mk
+>   ```
 
 **编译（compile）**：保证语法与声明正确。将源文件编译成中间目标文件，Windows下为`.obj`，UNIX下为`.o`，即Object file。
 
@@ -26,7 +32,7 @@ program : program.c head.h
 	g++ program.cc head.h -o program 
 ```
 
-**target：**可以是***一个***目标文件、执行文件、label
+**target：**可以是**一个**目标文件、执行文件、label
 
 **prerequisites：**生成target所依赖的文件或target
 
@@ -178,6 +184,3 @@ g++ -MM program.cc		# -M会将标准库也包含进来
 -include xxx.d		# 将自动生成依赖导入makefile
 ```
 
-##### 使用自动生成依赖
-
-[如何使用自动生成依赖](https://www.cnblogs.com/tjy1805099/p/12604909.html)

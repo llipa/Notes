@@ -116,3 +116,35 @@ git remote rm origin		# 根据第一列的名字解除本地与远程绑定关�
 
 当需要在别人的库的基础上开发，并需要在 github 上进行版本控制时，需要在 github 上 fork 别人的库，将其克隆到自己的账号下，然后从自己的账号下 clone。否则将无法推送修改。
 
+### 分支管理
+
+* git中有一个`HEAD`指针指向当前分支。
+* `master`指向主分支。
+
+#### 查看/创建/切换分支
+
+```shell
+# 查看分支
+git branch
+# 创建分支
+git branch dev
+# 切换分支
+git switch dev
+git checkout dev
+# 创建并切换分支
+git checkout -b dev
+```
+
+#### 合并分支
+
+```shell
+# 当master和分支不存在冲突时，可以“快速合并”，否则会报错
+git merge dev
+```
+
+#### 删除分支
+
+```shell
+git branch -d dev
+```
+
