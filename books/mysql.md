@@ -4,8 +4,8 @@
 
 ### 1. 数据库相关概念
 
-* **DB（Database）数据库：**是保存有组织的数据的容器。
-* **DBMS（Database Management System）数据库软件：**是创建和管理数据库的工具。
+* **DB（Database）数据库**：是保存有组织的数据的容器。
+* **DBMS（Database Management System）数据库软件**：是创建和管理数据库的工具。
 
 ### 2. 常见DBMS
 
@@ -210,14 +210,18 @@ WHERE class_id NOT IN (2, 3);
 # 例如'jet%'表示jet后面接任意字符
 # '%jet%'表示包含jet的任意字符
 # 's%e'表示s开头e结尾的任意字符
-SELECT name, score FROM students WHERE score LIKE '%9%';
+SELECT name, score
+FROM students
+WHERE score LIKE '%9%';
 ```
 
 #### 7.2 `_`：任意单个字符
 
 ```mysql
 # 和%用法一样，但是仅能匹配单个字符
-SELECT name, score FROM students WHERE score LIKE '9_';
+SELECT name, score
+FROM students
+WHERE score LIKE '9_';
 ```
 
 ### 8. 正则表达式搜索
@@ -231,32 +235,46 @@ SELECT name, score FROM students WHERE score LIKE '9_';
 #### 8.2 `.`：匹配任意一个字符
 
 ```mysql
-SELECT name, score FROM students WHERE score REGEXP '9.';
+SELECT name, score
+FROM students
+WHERE score REGEXP '9.';
 ```
 
 #### 8.3 `|`和`[]`：或匹配和单字符或匹配
 
 ```mysql
 # 或匹配
-SELECT name, score FROM students WHERE score REGEXP '81|85';
+SELECT name, score
+FROM students
+WHERE score REGEXP '81|85';
+
 # 单字符或匹配，匹配81或85
-SELECT name, score FROM students WHERE score REGEXP '8[15]';
+SELECT name, score
+FROM students
+WHERE score REGEXP '8[15]';
+
 # 范围匹配，匹配81-85
-SELECT name, score FROM students WHERE score REGEXP '8[1-5]';
+SELECT name, score
+FROM students
+WHERE score REGEXP '8[1-5]';
 ```
 
 #### 8.4 `?`：匹配单个字符的出现与否
 
 ```mysql
 # ?表示其前面的字符可有可无，即s可有可无
-SELECT prod_name FROM products WHERE prod_name REGEXP '\\([0-9] sticks?\\)';
+SELECT prod_name
+FROM products
+WHERE prod_name REGEXP '\\([0-9] sticks?\\)';
 ```
 
 #### 8.5 `{}`：指定数目的匹配
 
 ```mysql
 # 搜索任意连续的四个数字
-SELECT prod_name FROM products WHERE prod_name REGEXP '[[:digit:]]{4}';
+SELECT prod_name
+FROM products
+WHERE prod_name REGEXP '[[:digit:]]{4}';
 ```
 
 #### 8.6 `\\`：匹配特殊字符
@@ -273,7 +291,9 @@ SELECT prod_name FROM products WHERE prod_name REGEXP '[[:digit:]]{4}';
 
 ```mysql
 # 例子：搜索开头为数字或.
-SELECT prod_name FROM products WHERE prod_name REGEXP '^[[:digit:]\\.]';
+SELECT prod_name
+FROM products
+WHERE prod_name REGEXP '^[[:digit:]\\.]';
 ```
 
 #### 8.8 匹配字符类
@@ -395,7 +415,7 @@ ON customers.cust_id = orders.cust_id;
 
 #### 13.4 七种`JOIN`的实现
 
-![7种JOIN操作](pictures/join.jpg)
+![7种JOIN操作](pictures/mysql/join.jpg)
 
 * `JOIN`分七种操作。
 
