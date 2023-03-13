@@ -318,43 +318,114 @@ WHERE prod_name REGEXP '^[[:digit:]\\.]';
 
 ```mysql
 # Concat()将多个列的值合并后再输出
-SELECT Concat(name, ' score: ', score) FROM students ORDER BY score;
-# 使用别名替换Concat(...) # 也可以像前面那样采用' '来重命名
-SELECT Concat(name, ' score: ', score) AS final_test FROM students ORDER BY score;
+SELECT Concat(name, ' score: ', score)
+FROM students
+ORDER BY score;
+
+# 使用别名替换Concat(...)，也可以像前面那样采用' '来重命名
+SELECT Concat(name, ' score: ', score) AS final_test
+FROM students
+ORDER BY score;
+
+# 
 ```
 
 #### 算术操作
 
 ```mysql
 # 可以对列中的值进行加减乘除操作
-SELECT Concat(name, ' score: ', score*2) AS final_test FROM students ORDER BY score;
+SELECT Concat(name, ' score: ', score*2) AS final_test
+FROM students
+ORDER BY score;
 ```
 
-### 10. 聚合查询
+### 10. 函数
 
-* **聚集函数**：运行在行组上，计算和返回单个值的函数。
+#### 10.1 单行函数
+
+> 单输入，单输出。
+
+##### 文本处理函数
+
+见文档。
+
+##### 日期和时间处理函数
+
+见文档。
+
+##### 数值处理函数
+
+见文档。
+
+##### 流程控制函数
+
+| 函数                                                         | 说明                                         |
+| ------------------------------------------------------------ | -------------------------------------------- |
+| IF(value, value1, value2)                                    | 若value值为TRUE，返回value1，否则返回value2  |
+| IFNULL(value1, value2)                                       | 若value1不为NULL，返回value1，否则返回value2 |
+| CASE WHEN 条件1 THEN 结果1 WHEN 条件2 THEN 结果2 ... [ELSE resultn] END | if...else if...else...                       |
+| CASE expr WHEN 常量1 THEN 值1 WHEN 常量2 THEN 值2 ... [ELSE 值n] END | switch...case...                             |
+
+##### 加密与解密函数
+
+| 函数                         | 用法                                                         |
+| ---------------------------- | ------------------------------------------------------------ |
+| PASSWORD(str)                | 返回str的加密版本，41位长的字符串。加密结果不可逆，常用于用户密码加密。（mysql8.0中已废弃） |
+| MD5(str)                     | 从原明文密码str计算并返回加密后的密码字符串，当参数为NULL时，返回NULL。 |
+| SHA(str)                     | 从原明文密码str计算并返回加密后的密码字符串，当参数为NULL时，返回NULL。`SHA加密算法比MD5更安全`。 |
+| ENCODE(value, password_seed) | 返回使用password_seed作为加密密码加密value                   |
+| DECODE(value, password_seed) | 返回使用password_seed作为加密密码解密value                   |
+
+#### 10.2 多行函数（聚合函数）
+
+> 多输入，单输出。
+
+* **聚合函数**：运行在行组上，计算和返回单个值的函数。
+
+| 函数    | 说明             |
+| ------- | ---------------- |
+| AVG()   | 返回某列的平均值 |
+| COUNT() | 返回某列的行数   |
+| MAX()   | 返回某列的最大值 |
+| MIN()   | 返回某列的最小值 |
+| SUM()   | 返回某列的和     |
 
 ```mysql
-# AVG()		返回某列的平均值
-# COUNT()	返回某列的行数
-# MAX()		返回某列的最大值
-# MIN()		返回某列的最小值
-# SUM()		返回某列的和
-SELECT AVG(score) AS avg_score FROM students;
+# AVG()函数例子
+SELECT AVG(score) AS avg_score
+FROM students;
+
 # DISTINCT参数用于对列中不同值进行聚合查询
-SELECT AVG(DISTINCT score) AS avg_score FROM students;
+SELECT AVG(DISTINCT score) AS avg_score
+FROM students;
 ```
 
-### 11. 分组数据（GROUP BY / HAVING）
+### 11. 分组数据（GROUP BY [HAVING]）
 
 ```mysql
-# 创建分组，对所有学生按照性别进行统计
-SELECT gender, COUNT(*) AS num_stu FROM students GROUP BY gender;
+# 创建分组，按部门和工作对员工的平均工资进行查询
+SELECT department_id, job_id, AVG(salary)
+FROM employees
+GROUP BY department_id, job_id;
+
+# WITH ROLLUP在查询的结果后增加一条记录，表示所有结果的总和
+SELECT department_id, job_id, AVG(salary)
+FROM employees
+GROUP BY department_id, job_id WITH ROLLUP;
+
 # 过滤分组，WHERE过滤行，HAVING过滤分组
-SELECT score, COUNT(*) AS num_stu FROM students GROUP BY score HAVING COUNT(*) > 1;
+SELECT score, COUNT(*) num_stu
+FROM students
+GROUP BY score
+HAVING COUNT(*) > 1;
 ```
 
-> `WHERE`在分组前进行过滤，`HAVING`在分组后进行过滤。
+* `GROUP BY`的分组必须包含`SELECT`的分组。
+* `WITH ROLLUP`不能与`ORDER BY`同时使用。
+
+* 对聚合函数的结果进行过滤必须`HAVING`。
+
+* `HAVING`也能对普通过滤条件进行过滤，但效率不如`WHERE`。
 
 ### 12. 子查询
 
@@ -471,7 +542,18 @@ ON e.department_id = d.department_id
 WHERE e.department_id IS NULL;
 ```
 
+#### 13.5 SQL99新特性（NATURAL JOIN / USING）
 
+```mysql
+# NATURAL JOIN：自动查询两张联结表中所有相同的字段并进行等值联结
+SELECT employee_id, last_name, department_name
+FROM employees e NATURAL JOIN departments d;
+
+# USING：将同名的字段进行等值联结
+SELECT employee_id, last_name, department_name
+FROM employees e JOIN departments d
+USING (department_id);
+```
 
 ### 14. 组合查询（UNION / UNION ALL）
 
