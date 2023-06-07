@@ -148,3 +148,17 @@ git merge dev
 git branch -d dev
 ```
 
+### 标签操作
+
+* git中的标签，指的是某个分支某个特定时间点的状态。通过标签，可以方便的切换到标记时的状态。
+
+```shell
+# 列出已有标签
+git tag
+# 创建标签
+git tag [标签名]
+# 把标签推送至远程仓库
+git push [shortName] [标签名]
+# 检出标签（会创建新分支）
+git checkout -b [branch] [标签名]
+```
