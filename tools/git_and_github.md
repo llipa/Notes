@@ -158,7 +158,7 @@ git tag
 # 创建标签
 git tag [标签名]
 # 把标签推送至远程仓库
-git push [shortName] [标签名]
+git push origin [标签名]
 # 检出标签（会创建新分支）
 git checkout -b [branch] [标签名]
 ```
